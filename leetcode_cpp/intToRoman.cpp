@@ -2,43 +2,44 @@
 #include "iostream"
 #include "stack"
 using namespace std;
+pair<char, int> p[] = {
+    {'I', 1},
+    {'V', 5},
+    {'X', 10},
+    {'L', 50},
+    {'C', 100},
+    {'D', 500},
+    {'M', 1000}};
+int findval(pair<char, int> p[], char s)
+{
+    for (int i = 0;; i++)
+    {
+        if (p[i].first == s)
+        {
+            return p[i].second;
+        }
+    }
+}
 class Solution
 {
 public:
-    string intToRoman(int num)
+    static int romanToInt(string s)
     {
-        string table[] = {"I", "IV", "V", "X", "L", "C", "D", "M"};
-        stack<int> store;
-        string ans = NULL;
-        while (num)
+        int pre = -1;
+        int ans = 0;
+        for (int i = s.size() - 1; i >= 0; i--)
         {
-            store.push(num % 10);
-            num /= 10;
+            int val = findval(p, s.at(i));
+            if (val < pre)
+                ans -= val;
+            else
+                ans += val;
+            pre = val;
         }
-        while (!store.empty())
-        {
-            auto w = store.size(); //取得当前数字所在位数
-            int t = store.top();
-            switch (w)
-            {
-            case 1:
-
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            default:
-                break;
-            }
-            store.pop();
-        }
+        return ans;
     }
 };
 int main()
 {
-    int a = 0;
-    string s = "hehe";
+    cout << Solution::romanToInt("LVIII") << endl;
 }
